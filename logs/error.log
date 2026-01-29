@@ -1,0 +1,18 @@
+{
+  message: 'testing error log...',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:22'
+}
+{
+  message: 'testing error log...',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:22'
+}
+{
+  message: 'testing error log...',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:45'
+}

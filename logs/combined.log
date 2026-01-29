@@ -1,0 +1,78 @@
+{
+  message: 'testing error log...',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:22'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:22'
+}
+{
+  message: 'testing error log...',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:22'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:22'
+}
+{
+  message: 'testing error log...',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:45'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:09:45'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:12:57'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:13:02'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:13:05'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:13:22'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:13:25'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:13:28'
+}
+{
+  message: 'server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 18:13:31'
+}
