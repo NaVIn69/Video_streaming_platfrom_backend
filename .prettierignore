@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+coverage
+logs
+uploads
+*.log
+.env*
+package-lock.json
+.husky

@@ -76,3 +76,615 @@
   serviceName: 'video-streaming-service',
   timestamp: '29-01-2026 18:13:31'
 }
+{
+  message: 'MongoDB connection error: connect ECONNREFUSED 127.0.0.1:27017',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 22:28:06'
+}
+{
+  message: 'MongoDB connection error: bad auth : authentication failed',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:47:58'
+}
+{
+  message: 'MongoDB connection error: bad auth : authentication failed',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:54:01'
+}
+{
+  message: 'MongoDB connection error: bad auth : authentication failed',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:54:56'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:59:19'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:59:19'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:59:19'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:59:19'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:27:01'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:27:01'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:27:01'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:27:01'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:39:45'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:39:45'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:39:45'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:39:45'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:40:03'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:40:03'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:40:03'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:40:03'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:08'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:08'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:08'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:08'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:23'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:23'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:23'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:42:23'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:43:40'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:43:40'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:43:40'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:43:40'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:44:12'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:44:12'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:44:12'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:44:12'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:50:29'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:50:29'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:50:29'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:50:29'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:51:58'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:51:58'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:51:58'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:51:58'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:52:39'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:52:39'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:52:39'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:52:39'
+}
+{
+  message: 'Created new tenant: acme-corp',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:52:40'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:54:48'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:54:48'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:54:48'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 00:54:48'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:04:44'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:04:45'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:04:45'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:04:45'
+}
+{
+  message: 'User registered: navin@gmail.com',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:08:05'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:21:50'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:21:50'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:21:50'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:21:50'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:39:14'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:39:14'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:39:14'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:39:14'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:42:15'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:42:15'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:42:15'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:42:15'
+}
+{
+  message: 'Created new tenant: GlobalX',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:47:54'
+}
+{
+  message: 'User registered: praveen@gmail.com',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:47:54'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:51:41'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:51:41'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:51:41'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 01:51:41'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:00:20'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:00:20'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:00:20'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:00:20'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:16'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:16'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:16'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:16'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:27'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:27'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:27'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:02:27'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:07:10'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:07:10'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:07:10'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:07:10'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:09:10'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:09:10'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:09:10'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:09:10'
+}
+{
+  message: 'User logged in: praveen@gmail.com',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:17:50'
+}
+{
+  message: 'User logged in: praveen@gmail.com',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:18:39'
+}
+{
+  message: 'MongoDB connected successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:23:26'
+}
+{
+  message: 'Server started successfully',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:23:26'
+}
+{
+  message: 'Server is running on port 3000',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:23:26'
+}
+{
+  message: 'Environment: dev',
+  level: 'info',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 02:23:26'
+}

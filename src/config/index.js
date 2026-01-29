@@ -2,11 +2,18 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 dotenv.config({
-    path: path.join(process.cwd(), `.env.${process.env.NODE_ENV || 'dev'}`),
+  path: path.join(process.cwd(), `.env.${process.env.NODE_ENV || 'dev'}`)
 });
 
 export const Config = {
-    PORT: process.env.PORT,
-    NODE_ENV: process.env.NODE_ENV,
-    MONGO_URI: process.env.MONGO_URI,
+  PORT: process.env.PORT || 3000,
+  NODE_ENV: process.env.NODE_ENV || 'dev',
+  MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/video_streaming',
+  JWT_SECRET: process.env.JWT_SECRET || 'your-secret-key-change-in-production',
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
+  UPLOAD_DIR: process.env.UPLOAD_DIR || 'uploads',
+  MAX_FILE_SIZE: process.env.MAX_FILE_SIZE || 1073741824, // 1GB in bytes
+  ALLOWED_MIME_TYPES: (
+    process.env.ALLOWED_MIME_TYPES || 'video/mp4,video/webm,video/quicktime'
+  ).split(',')
 };

@@ -16,3 +16,27 @@
   serviceName: 'video-streaming-service',
   timestamp: '29-01-2026 18:09:45'
 }
+{
+  message: 'MongoDB connection error: connect ECONNREFUSED 127.0.0.1:27017',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 22:28:06'
+}
+{
+  message: 'MongoDB connection error: bad auth : authentication failed',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:47:58'
+}
+{
+  message: 'MongoDB connection error: bad auth : authentication failed',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:54:01'
+}
+{
+  message: 'MongoDB connection error: bad auth : authentication failed',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '29-01-2026 23:54:56'
+}
