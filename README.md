@@ -190,4 +190,4 @@ npm start
 5.  Open a Pull Request
 
 ## 📄 License
-Distributed under the **ISC License**.
+Distributed under the **MIT License**.
