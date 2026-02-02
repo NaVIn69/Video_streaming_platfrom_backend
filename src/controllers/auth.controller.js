@@ -5,6 +5,7 @@ export default class AuthController {
 
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
+    this.superAdminLogin = this.superAdminLogin.bind(this);
     this.getProfile = this.getProfile.bind(this);
   }
 
@@ -26,10 +27,54 @@ export default class AuthController {
       const tenantSlug = req.tenantSlug || req.body.tenantSlug || 'default';
       const result = await this.authService.login(req.body.email, req.body.password, tenantSlug);
       this.logger.info(`User logged in: ${req.body.email}`);
-      res.json({
-        success: true,
-        data: result
-      });
+      /**
+        {
+        httpOnly: true,
+       secure: process.env.NODE_ENV === 'production',
+       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 24 * 60 * 60 * 1000
+      }
+      //  */
+      // res.status(200).cookie('token', result.token).json({
+      //    success: true,
+      //   data: result
+      // })
+      // res.cookie("token", "test123").json({ ok: true });
+      res
+        .status(200)
+        .cookie('token', result.token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 24 * 60 * 60 * 1000
+        })
+        .json({
+          success: true,
+          data: result
+        });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async superAdminLogin(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const result = await this.authService.loginSuperAdmin(email, password);
+      this.logger.info(`Superadmin logged in: ${email}`);
+
+      res
+        .status(200)
+        .cookie('token', result.token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 24 * 60 * 60 * 1000 // 1 day
+        })
+        .json({
+          success: true,
+          data: result
+        });
     } catch (err) {
       next(err);
     }

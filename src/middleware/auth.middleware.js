@@ -10,13 +10,12 @@ export class AuthMiddleware {
 
   authenticate = async (req, res, next) => {
     try {
-      const authHeader = req.headers.authorization;
+      const token = req.headers.authorization?.split(' ')[1] || req.cookies?.token;
 
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      if (!token) {
         throw createError(401, 'No token provided');
       }
 
-      const token = authHeader.split(' ')[1];
       const decoded = await this.authService.verifyToken(token);
 
       // Verify user still exists and is active

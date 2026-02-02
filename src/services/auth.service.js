@@ -4,25 +4,21 @@ import createError from 'http-errors';
 import { Config } from '../config/index.js';
 
 export default class AuthService {
-  constructor(userRepository, tenantRepository, roleRepository, logger) {
+  constructor(userRepository, tenantService, roleRepository, superAdminRepository, logger) {
     this.userRepository = userRepository;
-    this.tenantRepository = tenantRepository;
+    this.tenantService = tenantService;
     this.roleRepository = roleRepository;
+    this.superAdminRepository = superAdminRepository;
     this.logger = logger;
   }
 
   async register(data) {
     const { email, password, firstName, lastName, tenantSlug } = data;
 
-    // Find or create tenant
-    let tenant = await this.tenantRepository.findBySlug(tenantSlug);
+    // Find or create tenant via Service (handles roles)
+    const tenant = await this.tenantService.getTenantBySlug(tenantSlug);
     if (!tenant) {
-      tenant = await this.tenantRepository.create({
-        name: tenantSlug,
-        slug: tenantSlug,
-        isActive: true
-      });
-      this.logger.info(`Created new tenant: ${tenantSlug}`);
+      throw createError(404, 'Tenant not found');
     }
 
     // Check if user already exists
@@ -34,13 +30,9 @@ export default class AuthService {
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
 
-    // Get default role (viewer)
-    let role = await this.roleRepository.findByName('viewer', tenant._id);
+    const role = await this.roleRepository.findByName('viewer', tenant._id);
     if (!role) {
-      role = await this.roleRepository.create({
-        tenantId: tenant._id,
-        name: 'viewer'
-      });
+      throw createError(500, 'Default roles not fully provisioned for tenant');
     }
 
     // Create user
@@ -65,7 +57,7 @@ export default class AuthService {
 
   async login(email, password, tenantSlug) {
     // Find tenant
-    const tenant = await this.tenantRepository.findBySlug(tenantSlug);
+    const tenant = await this.tenantService.getTenantBySlug(tenantSlug);
     if (!tenant || !tenant.isActive) {
       throw createError(404, 'Tenant not found or inactive');
     }
@@ -73,7 +65,7 @@ export default class AuthService {
     // Find user
     const user = await this.userRepository.findByEmail(email, tenant._id);
     if (!user || !user.isActive) {
-      throw createError(401, 'Invalid credentials');
+      throw createError(401, 'user is not active or Found');
     }
 
     // Verify password
@@ -121,5 +113,74 @@ export default class AuthService {
     } catch {
       throw createError(401, 'Invalid or expired token');
     }
+  }
+
+  async loginSuperAdmin(email, password) {
+    // 1. Check Config (Hardcoded SuperAdmin)
+    if (email === Config.SUPER_ADMIN.EMAIL && password === Config.SUPER_ADMIN.PASSWORD) {
+      const token = jwt.sign(
+        {
+          role: 'SUPER_ADMIN',
+          email: Config.SUPER_ADMIN.EMAIL
+        },
+        Config.SUPER_ADMIN.JWT_SECRET,
+        { expiresIn: '1d' }
+      );
+      return {
+        token,
+        message: 'Superadmin logged in successfully'
+      };
+    }
+
+    // 2. Check Database (Dynamic SuperAdmins)
+    if (this.superAdminRepository) {
+      const admin = await this.superAdminRepository.findByEmail(email);
+      if (admin && admin.isActive) {
+        const isValid = await bcrypt.compare(password, admin.passwordHash);
+        if (isValid) {
+          await this.superAdminRepository.updateLastLogin(admin._id);
+          const token = jwt.sign(
+            {
+              role: 'SUPER_ADMIN',
+              email: admin.email,
+              id: admin._id
+            },
+            Config.SUPER_ADMIN.JWT_SECRET,
+            { expiresIn: '1d' }
+          );
+          return {
+            token,
+            message: 'Superadmin logged in successfully'
+          };
+        }
+      }
+    }
+
+    throw createError(401, 'Invalid superadmin credentials');
+  }
+
+  async createSuperAdmin(data) {
+    const { email, password, firstName, lastName } = data;
+
+    // Check if exists
+    const existing = await this.superAdminRepository.findByEmail(email);
+    if (existing) {
+      throw createError(409, 'Superadmin with this email already exists');
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const admin = await this.superAdminRepository.create({
+      email,
+      passwordHash,
+      firstName,
+      lastName,
+      isActive: true
+    });
+
+    // Return without password
+    const adminObj = admin.toObject();
+    delete adminObj.passwordHash;
+    return adminObj;
   }
 }

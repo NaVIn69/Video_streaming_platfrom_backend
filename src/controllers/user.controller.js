@@ -7,7 +7,10 @@ export default class UserController {
     this.getAll = this.getAll.bind(this);
     this.getById = this.getById.bind(this);
     this.update = this.update.bind(this);
+    this.getById = this.getById.bind(this);
+    this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
+    this.assignRole = this.assignRole.bind(this);
   }
 
   async create(req, res, next) {
@@ -74,6 +77,19 @@ export default class UserController {
       res.json({
         success: true,
         message: 'User deleted successfully'
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+  async assignRole(req, res, next) {
+    try {
+      const { userEmail, role } = req.body;
+      const result = await this.userService.assignRoleToUser(userEmail, role, req.tenantId);
+      this.logger.info(`Role assigned: ${role} to ${userEmail} by ${req.user.email}`);
+      res.json({
+        success: true,
+        ...result
       });
     } catch (err) {
       next(err);

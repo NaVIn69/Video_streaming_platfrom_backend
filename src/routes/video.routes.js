@@ -1,68 +1,34 @@
 import express from 'express';
-import {
-  validateVideoUpload,
-  validateVideoUpdate,
-  validateVideoId,
-  validateVideoQuery
-} from '../validators/video.validator.js';
-
-import { singleVideoUpload } from '../middleware/upload.middleware.js';
 
 export default function createVideoRoutes(dependencies) {
   const router = express.Router();
-  const { videoController, authMiddleware } = dependencies;
+  const { videoController, authMiddleware, tenantMiddleware, storageService } = dependencies;
 
-  // All video routes require authentication
+  // Global middleware
   router.use(authMiddleware.authenticate);
+  router.use(tenantMiddleware.extractTenant);
 
-  // Upload video (requires upload permission)
+  // Upload Video (Editors/Admins only)
   router.post(
-    '/',
+    '/upload',
     authMiddleware.requirePermission('videos', 'upload'),
-    singleVideoUpload,
-    validateVideoUpload,
+    (req, res, next) => {
+      // Initialize middleware lazily to handle eventual consistency of Config
+      const upload = storageService.getUploadMiddleware();
+      const uploadSingle = upload.single('video');
+      uploadSingle(req, res, next);
+    },
     videoController.upload
   );
 
-  // Get all videos (requires view permission)
-  router.get(
-    '/',
-    authMiddleware.requirePermission('videos', 'view'),
-    validateVideoQuery,
-    videoController.getAll
-  );
+  // List Videos (All roles)
+  router.get('/', authMiddleware.requirePermission('videos', 'view'), videoController.list);
 
-  // Get video by ID (requires view permission)
-  router.get(
-    '/:id',
-    authMiddleware.requirePermission('videos', 'view'),
-    validateVideoId,
-    videoController.getById
-  );
-
-  // Stream video (requires view permission)
+  // Stream Video (All roles)
   router.get(
     '/:id/stream',
     authMiddleware.requirePermission('videos', 'view'),
-    validateVideoId,
     videoController.stream
-  );
-
-  // Update video (requires edit permission)
-  router.put(
-    '/:id',
-    authMiddleware.requirePermission('videos', 'edit'),
-    validateVideoId,
-    validateVideoUpdate,
-    videoController.update
-  );
-
-  // Delete video (requires delete permission)
-  router.delete(
-    '/:id',
-    authMiddleware.requirePermission('videos', 'delete'),
-    validateVideoId,
-    videoController.delete
   );
 
   return router;

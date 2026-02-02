@@ -15,5 +15,25 @@ export const Config = {
   MAX_FILE_SIZE: process.env.MAX_FILE_SIZE || 1073741824, // 1GB in bytes
   ALLOWED_MIME_TYPES: (
     process.env.ALLOWED_MIME_TYPES || 'video/mp4,video/webm,video/quicktime'
-  ).split(',')
+  ).split(','),
+  AWS: {
+    BUCKET_NAME: process.env.AWS_BUCKET_NAME,
+    REGION: process.env.AWS_REGION,
+    ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
+  },
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+  SUPER_ADMIN: {
+    EMAIL: process.env.SUPER_ADMIN_EMAIL || 'superadmin@video.com',
+    PASSWORD: process.env.SUPER_ADMIN_PASSWORD || 'supersecret',
+    JWT_SECRET: process.env.SUPER_ADMIN_JWT_SECRET || 'super-admin-secret-key-change-me'
+  }
 };
+
+/**
+ *
+ * AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+AWS_BUCKET_NAME=
+ */

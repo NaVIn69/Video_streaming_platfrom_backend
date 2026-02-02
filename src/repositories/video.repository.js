@@ -1,54 +1,29 @@
-export default class VideoRepository {
-  constructor(videoModel) {
-    this.videoModel = videoModel;
+class VideoRepository {
+  constructor(model) {
+    this.model = model;
   }
 
-  async create(data) {
-    return this.videoModel.create(data);
+  async create(videoData) {
+    const video = await this.model.create(videoData);
+    return video;
   }
 
   async findById(id, tenantId) {
-    const query = { _id: id };
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-    return this.videoModel.findOne(query).populate('uploadedBy', 'email firstName lastName').exec();
+    return this.model.findOne({ _id: id, tenantId });
   }
 
-  async findByTenant(tenantId, options = {}) {
-    const { page = 1, limit = 10, search, status, isSafe, uploadedBy } = options;
-
-    const query = { tenantId };
-
-    if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
-      ];
-    }
-
-    if (status) {
-      query.status = status;
-    }
-
-    if (isSafe !== undefined) {
-      query['sensitivityAnalysis.isSafe'] = isSafe;
-    }
-
-    if (uploadedBy) {
-      query.uploadedBy = uploadedBy;
-    }
-
+  async find(query, options = {}) {
+    const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
     const skip = (page - 1) * limit;
+
     const [videos, total] = await Promise.all([
-      this.videoModel
+      this.model
         .find(query)
-        .populate('uploadedBy', 'email firstName lastName')
+        .sort(sort)
         .skip(skip)
         .limit(limit)
-        .sort({ createdAt: -1 })
-        .exec(),
-      this.videoModel.countDocuments(query).exec()
+        .populate('uploader', 'firstName lastName email'),
+      this.model.countDocuments(query)
     ]);
 
     return {
@@ -61,41 +36,6 @@ export default class VideoRepository {
       }
     };
   }
-
-  async updateById(id, data, tenantId) {
-    const query = { _id: id };
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-    return this.videoModel
-      .findOneAndUpdate(query, data, { new: true })
-      .populate('uploadedBy', 'email firstName lastName')
-      .exec();
-  }
-
-  async deleteById(id, tenantId) {
-    const query = { _id: id };
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-    return this.videoModel.findOneAndDelete(query).exec();
-  }
-
-  async updateProcessingProgress(id, progress, tenantId) {
-    const query = { _id: id };
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-    return this.videoModel
-      .findOneAndUpdate(query, { processingProgress: progress }, { new: true })
-      .exec();
-  }
-
-  async updateStatus(id, status, tenantId) {
-    const query = { _id: id };
-    if (tenantId) {
-      query.tenantId = tenantId;
-    }
-    return this.videoModel.findOneAndUpdate(query, { status }, { new: true }).exec();
-  }
 }
+
+export default VideoRepository;

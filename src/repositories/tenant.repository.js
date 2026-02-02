@@ -8,7 +8,7 @@ export default class TenantRepository {
   }
 
   async findBySlug(slug) {
-    return this.tenantModel.findOne({ name: slug, isActive: true }).exec();
+    return this.tenantModel.findOne({ slug, isActive: true }).exec();
   }
 
   async findById(id) {

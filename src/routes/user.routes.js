@@ -21,6 +21,13 @@ export default function createUserRoutes(dependencies) {
     userController.create
   );
 
+  // Assign role to user (requires edit permission)
+  router.post(
+    '/assign-role',
+    authMiddleware.requirePermission('users', 'edit'),
+    userController.assignRole
+  );
+
   // Get all users (requires view permission)
   router.get(
     '/',

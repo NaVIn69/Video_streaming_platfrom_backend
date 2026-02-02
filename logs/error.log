@@ -40,3 +40,117 @@
   serviceName: 'video-streaming-service',
   timestamp: '29-01-2026 23:54:56'
 }
+{
+  message: "MongoDB connection error: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/",
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 14:09:19'
+}
+{
+  message: "MongoDB connection error: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/",
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 14:11:05'
+}
+{
+  message: "MongoDB connection error: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/",
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 14:13:26'
+}
+{
+  message: "MongoDB connection error: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/",
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '30-01-2026 14:17:48'
+}
+{
+  message: "MongoDB connection error: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/",
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 10:56:48'
+}
+{
+  message: 'Server startup error: bucket is required',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:24:30'
+}
+{
+  message: 'Server startup error: bucket is required',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:30:36'
+}
+{
+  message: 'Server startup error: StorageService: Check your .env file, AWS_BUCKET_NAME is undefined!',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:32:38'
+}
+{
+  message: 'Server startup error: StorageService: Check your .env file, AWS_BUCKET_NAME is undefined!',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:34:16'
+}
+{
+  message: 'Server startup error: StorageService: Check your .env file, AWS_BUCKET_NAME is undefined!',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:39:57'
+}
+{
+  message: 'Server startup error: StorageService: Check your .env file, AWS_BUCKET_NAME is undefined!',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:42:59'
+}
+{
+  message: 'Server startup error: StorageService: Check your .env file, AWS_BUCKET_NAME is undefined!',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:44:39'
+}
+{
+  message: 'Server startup error: StorageService: Check your .env file, AWS_BUCKET_NAME is undefined!',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:44:59'
+}
+{
+  message: 'Server startup error: AiService is not defined',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:48:53'
+}
+{
+  message: 'Server startup error: AiService is not defined',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 11:49:26'
+}
+{
+  message: 'Server startup error: userController is not defined',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 16:34:25'
+}
+{
+  message: 'Server startup error: userController is not defined',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 16:36:17'
+}
+{
+  message: 'Server startup error: userController is not defined',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 16:37:38'
+}
+{
+  message: 'Server startup error: userController is not defined',
+  level: 'error',
+  serviceName: 'video-streaming-service',
+  timestamp: '31-01-2026 16:38:30'
+}

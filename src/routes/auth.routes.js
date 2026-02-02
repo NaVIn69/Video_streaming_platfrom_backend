@@ -13,10 +13,13 @@ export default function createAuthRoutes(dependencies) {
     authController.register
   );
 
-  router.post('/login', tenantMiddleware.extractTenant, validateLogin, authController.login);
+  router.post('/login', validateLogin, authController.login);
+
+  // Superadmin Login
+  router.post('/admin/login', authController.superAdminLogin);
 
   // Protected route
-  router.get('/profile', authMiddleware.authenticate, authController.getProfile);
+  router.get('/me', authMiddleware.authenticate, authController.getProfile);
 
   return router;
 }

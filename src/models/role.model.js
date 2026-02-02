@@ -47,7 +47,7 @@ const RoleSchema = new mongoose.Schema(
 RoleSchema.index({ tenantId: 1, name: 1 }, { unique: true });
 
 // Set default permissions based on role name
-RoleSchema.pre('save', async function () {
+RoleSchema.pre('save', function () {
   if (this.isNew) {
     switch (this.name) {
       case 'viewer':

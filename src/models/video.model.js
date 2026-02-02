@@ -8,11 +8,10 @@ const VideoSchema = new mongoose.Schema(
       required: true,
       index: true
     },
-    uploadedBy: {
+    uploader: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
-      index: true
+      required: true
     },
     title: {
       type: String,
@@ -27,30 +26,35 @@ const VideoSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    originalFilename: {
+    s3Key: {
       type: String,
       required: true
     },
-    filePath: {
+    bucket: {
       type: String,
       required: true
     },
-    mimeType: {
+    mimetype: {
       type: String,
       required: true
     },
-    fileSize: {
+    size: {
       type: Number,
       required: true
     },
     duration: {
-      type: Number // in seconds
+      type: Number, // In seconds
+      default: 0
     },
-    status: {
+    sensitivityStatus: {
       type: String,
-      enum: ['uploading', 'processing', 'completed', 'failed', 'flagged'],
-      default: 'uploading',
-      index: true
+      enum: ['PENDING', 'SAFE', 'FLAGGED'],
+      default: 'PENDING'
+    },
+    processingStatus: {
+      type: String,
+      enum: ['PENDING', 'PROCESSING', 'COMPLETED', 'FAILED'],
+      default: 'PENDING'
     },
     processingProgress: {
       type: Number,
@@ -58,47 +62,21 @@ const VideoSchema = new mongoose.Schema(
       min: 0,
       max: 100
     },
-    sensitivityAnalysis: {
-      isSafe: {
-        type: Boolean,
-        default: null
-      },
-      confidence: {
-        type: Number,
-        min: 0,
-        max: 100
-      },
-      flags: [
-        {
-          type: String
-        }
-      ],
-      analyzedAt: {
-        type: Date
-      }
+    views: {
+      type: Number,
+      default: 0
     },
     metadata: {
-      width: Number,
-      height: Number,
-      bitrate: Number,
-      codec: String
-    },
-    isActive: {
-      type: Boolean,
-      default: true
+      type: mongoose.Schema.Types.Mixed
     }
   },
   {
-    timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
+    timestamps: true
   }
 );
 
-// Compound indexes for efficient queries
-VideoSchema.index({ tenantId: 1, status: 1 });
-VideoSchema.index({ tenantId: 1, uploadedBy: 1 });
+// Indexes for common queries
+VideoSchema.index({ tenantId: 1, sensitivityStatus: 1 });
 VideoSchema.index({ tenantId: 1, createdAt: -1 });
-VideoSchema.index({ tenantId: 1, 'sensitivityAnalysis.isSafe': 1 });
 
 export const Video = mongoose.models.Video || mongoose.model('Video', VideoSchema);

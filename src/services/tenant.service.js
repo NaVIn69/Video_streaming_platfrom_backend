@@ -2,8 +2,9 @@ import createError from 'http-errors';
 import slugify from 'slugify';
 
 export default class TenantService {
-  constructor(tenantRepository, logger) {
+  constructor(tenantRepository, roleService, logger) {
     this.tenantRepository = tenantRepository;
+    this.roleService = roleService;
     this.logger = logger;
   }
 
@@ -26,6 +27,9 @@ export default class TenantService {
       metadata,
       isActive: true
     });
+
+    // Automatically provision default roles
+    await this.roleService.createDefaultRoles(tenant._id);
 
     return tenant;
   }

@@ -31,6 +31,12 @@ const StartServer = async () => {
         logger.info(`Socket ${socket.id} joined tenant: ${tenantId}`);
       });
 
+      // Join user room for private updates
+      socket.on('join:user', userId => {
+        socket.join(`user:${userId}`);
+        logger.info(`Socket ${socket.id} joined user: ${userId}`);
+      });
+
       socket.on('disconnect', () => {
         logger.info(`Socket disconnected: ${socket.id}`);
       });
