@@ -45,12 +45,14 @@ export default class AuthService {
       roles: [role._id],
       isActive: true
     });
-
     await user.populate('roles');
+
+    const token = this.generateToken(user, tenant);
 
     // Remove sensitive data
     const userObj = user.toObject();
     delete userObj.passwordHash;
+    userObj.token = token;
 
     return userObj;
   }
@@ -114,49 +116,39 @@ export default class AuthService {
       throw createError(401, 'Invalid or expired token');
     }
   }
+  verifysuperadminToken(token) {
+    try {
+      const decoded = jwt.verify(token, Config.SUPER_ADMIN.JWT_SECRET);
+      return decoded;
+    } catch {
+      throw createError(401, 'Invalid or expired token');
+    }
+  }
 
   async loginSuperAdmin(email, password) {
-    // 1. Check Config (Hardcoded SuperAdmin)
-    if (email === Config.SUPER_ADMIN.EMAIL && password === Config.SUPER_ADMIN.PASSWORD) {
-      const token = jwt.sign(
-        {
-          role: 'SUPER_ADMIN',
-          email: Config.SUPER_ADMIN.EMAIL
-        },
-        Config.SUPER_ADMIN.JWT_SECRET,
-        { expiresIn: '1d' }
-      );
-      return {
-        token,
-        message: 'Superadmin logged in successfully'
-      };
+    const admin = await this.superAdminRepository.findByEmail(email);
+    if (!admin || !admin.isActive) {
+      throw createError(401, 'Invalid credentials');
     }
-
-    // 2. Check Database (Dynamic SuperAdmins)
-    if (this.superAdminRepository) {
-      const admin = await this.superAdminRepository.findByEmail(email);
-      if (admin && admin.isActive) {
-        const isValid = await bcrypt.compare(password, admin.passwordHash);
-        if (isValid) {
-          await this.superAdminRepository.updateLastLogin(admin._id);
-          const token = jwt.sign(
-            {
-              role: 'SUPER_ADMIN',
-              email: admin.email,
-              id: admin._id
-            },
-            Config.SUPER_ADMIN.JWT_SECRET,
-            { expiresIn: '1d' }
-          );
-          return {
-            token,
-            message: 'Superadmin logged in successfully'
-          };
-        }
-      }
+    const isValidPassword = await bcrypt.compare(password, admin.passwordHash);
+    if (!isValidPassword) {
+      throw createError(401, 'Invalid credentials');
     }
+    const token = jwt.sign(
+      {
+        role: 'SUPER_ADMIN',
+        email
+      },
+      Config.SUPER_ADMIN.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+    await this.superAdminRepository.updateLastLogin(admin._id);
 
-    throw createError(401, 'Invalid superadmin credentials');
+    return {
+      token,
+      admin,
+      message: 'Superadmin logged in successfully'
+    };
   }
 
   async createSuperAdmin(data) {
@@ -169,6 +161,14 @@ export default class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
+    const token = jwt.sign(
+      {
+        role: 'SUPER_ADMIN',
+        email
+      },
+      Config.SUPER_ADMIN.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
     const admin = await this.superAdminRepository.create({
       email,
@@ -181,6 +181,10 @@ export default class AuthService {
     // Return without password
     const adminObj = admin.toObject();
     delete adminObj.passwordHash;
+
+    // Attach token to the return object
+    adminObj.token = token;
+
     return adminObj;
   }
 }

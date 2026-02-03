@@ -1,5 +1,4 @@
 import http from 'http';
-import { Server } from 'socket.io';
 import app, { setupRoutes } from './app.js';
 import logger from './config/logger.js';
 import { Config } from './config/index.js';
@@ -14,33 +13,8 @@ const StartServer = async () => {
     const server = http.createServer(app);
 
     // Initialize Socket.io
-    const io = new Server(server, {
-      cors: {
-        origin: process.env.FRONTEND_URL || '*',
-        methods: ['GET', 'POST']
-      }
-    });
-
-    // Socket.io connection handling
-    io.on('connection', socket => {
-      logger.info(`Socket connected: ${socket.id}`);
-
-      // Join tenant room for real-time updates
-      socket.on('join:tenant', tenantId => {
-        socket.join(`tenant:${tenantId}`);
-        logger.info(`Socket ${socket.id} joined tenant: ${tenantId}`);
-      });
-
-      // Join user room for private updates
-      socket.on('join:user', userId => {
-        socket.join(`user:${userId}`);
-        logger.info(`Socket ${socket.id} joined user: ${userId}`);
-      });
-
-      socket.on('disconnect', () => {
-        logger.info(`Socket disconnected: ${socket.id}`);
-      });
-    });
+    const { initializeSocket } = await import('./socket/index.js');
+    const io = initializeSocket(server);
 
     // Initialize dependencies with Socket.io instance
     const dependencies = initializeDependencies(io);

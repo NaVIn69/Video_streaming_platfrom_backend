@@ -31,8 +31,18 @@ class StorageService {
           const tenantId = req.tenantId.toString();
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           const extension = file.originalname.split('.').pop();
-          // Organized storage: video/{tenantId}/{timestamp}-{random}.{ext}
-          const key = `videos/${tenantId}/${uniqueSuffix}.${extension}`;
+
+          let titleSlug = 'untitled';
+          if (req.body && req.body.title) {
+            titleSlug = req.body.title
+              .toLowerCase()
+              .replace(/[^a-z0-9]/g, '-') // Replace non-alphanumeric with hyphens
+              .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+              .replace(/^-|-$/g, ''); // Trim hyphens
+          }
+
+          // Organized storage: video/{tenantId}/{titleSlug}-{timestamp}-{random}.{ext}
+          const key = `videos/${tenantId}/${titleSlug}-${uniqueSuffix}.${extension}`;
           cb(null, key);
         }
       }),

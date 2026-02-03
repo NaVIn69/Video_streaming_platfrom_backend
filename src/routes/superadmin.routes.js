@@ -6,13 +6,12 @@ export default function createSuperAdminRoutes(dependencies) {
   const { superAdminController } = dependencies;
 
   // All superadmin routes require superadmin authentication
-  router.use(authenticateSuperAdmin);
+  router.post('/register', superAdminController.createSuperAdmin);
+  router.post('/login', superAdminController.loginSuperAdmin);
 
+  router.use(authenticateSuperAdmin);
   // Assign admin role to a user in a tenant
   router.post('/tenants/:tenantId/assign-admin', superAdminController.assignTenantAdmin);
-
-  // Create a new superadmin (requires superadmin authentication)
-  router.post('/', superAdminController.create);
 
   return router;
 }

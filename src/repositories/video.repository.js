@@ -36,6 +36,9 @@ class VideoRepository {
       }
     };
   }
+  async updateProcessingOutcome(videoId, tenantId, data) {
+    return this.model.findOneAndUpdate({ _id: videoId, tenantId }, { $set: data }, { new: true });
+  }
 }
 
 export default VideoRepository;

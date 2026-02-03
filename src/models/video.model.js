@@ -66,6 +66,13 @@ const VideoSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    sensitivityAnalysis: {
+      isSafe: Boolean,
+      confidence: Number,
+      flags: [String],
+      summary: String,
+      analyzedAt: Date
+    },
     metadata: {
       type: mongoose.Schema.Types.Mixed
     }

@@ -108,6 +108,31 @@ export default class UserService {
     return userObj;
   }
 
+  async assignRoleToUser(email, roleName, tenantId) {
+    // 1. Find user
+    const user = await this.userRepository.findByEmail(email, tenantId);
+    if (!user) {
+      throw createError(404, 'User not found');
+    }
+
+    // 2. Find role
+    const role = await this.roleRepository.findByName(roleName, tenantId);
+    if (!role) {
+      throw createError(404, `Role '${roleName}' not found`);
+    }
+
+    // 3. Update user roles (REPLACE existing roles)
+    // The requirement is to keep only the updated permission (e.g., upgrade Viewer -> Admin)
+    const newRoles = [role._id];
+    await this.userRepository.updateById(user._id, { roles: newRoles }, tenantId);
+
+    // Return updated user
+    const updatedUser = await this.userRepository.findById(user._id, tenantId);
+    const userObj = updatedUser.toObject();
+    delete userObj.passwordHash;
+    return userObj;
+  }
+
   async deleteUser(userId, tenantId) {
     const user = await this.userRepository.deleteById(userId, tenantId);
     if (!user) {

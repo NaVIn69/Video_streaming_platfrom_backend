@@ -13,10 +13,18 @@ export default class AuthController {
     try {
       const user = await this.authService.register(req.body);
       this.logger.info(`User registered: ${user.email}`);
-      res.status(201).json({
-        success: true,
-        data: user
-      });
+      res
+        .status(200)
+        .cookie('token', user.token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 24 * 60 * 60 * 1000
+        })
+        .json({
+          success: true,
+          data: user
+        });
     } catch (err) {
       next(err);
     }

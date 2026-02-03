@@ -13,7 +13,11 @@ export class TenantMiddleware {
       const subdomain = host.split('.')[0];
 
       // Or from header
-      const tenantSlug = req.headers['x-tenant-slug'] || req.query.tenant || subdomain;
+      const tenantSlug =
+        (req.body && req.body.tenantSlug) ||
+        req.headers['x-tenant-slug'] ||
+        req.query.tenant ||
+        subdomain;
 
       if (!tenantSlug || tenantSlug === 'localhost' || tenantSlug === 'www') {
         // Default tenant for development

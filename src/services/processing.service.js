@@ -2,7 +2,14 @@ import ffmpeg from 'fluent-ffmpeg';
 import { getSignedVideoUrl } from '../utils/s3.utils.js';
 import path from 'path';
 import os from 'os';
-import fs from 'fs';
+import fs from 'fs/promises';
+import ffmpegPath from 'ffmpeg-static';
+import ffprobePath from 'ffprobe-static';
+import createError from 'http-errors';
+
+// Set paths
+ffmpeg.setFfmpegPath(ffmpegPath);
+ffmpeg.setFfprobePath(ffprobePath.path);
 
 class ProcessingService {
   constructor(videoRepository, aiService, io = null, logger) {
@@ -24,7 +31,7 @@ class ProcessingService {
 
       const video = await this.videoRepository.findById(videoId, tenantId);
       if (!video) {
-        throw new Error('Video not found');
+        throw createError(404, 'Video not found');
       }
 
       uploaderId = video.uploader.toString();
@@ -44,11 +51,16 @@ class ProcessingService {
         metadata = await this.extractMetadata(videoUrl);
       } catch (err) {
         this.logger.error(`Failed to extract metadata for video ${videoId}: ${err.message}`);
-        throw new Error('Failed to extract video metadata.');
+        throw createError(500, 'Failed to extract video metadata.');
       }
 
       video.duration = metadata.duration;
-      video.duration = metadata.duration;
+
+      // Fix: If size is 0, fetch actual size from metadata or S3
+      if (video.size === 0 && metadata.size) {
+        video.size = metadata.size;
+      }
+
       this.emitProgress(tenantId, uploaderId, videoId, 20, 'Metadata extracted');
 
       // 2. Extract Frames for AI Analysis
@@ -56,8 +68,9 @@ class ProcessingService {
 
       const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), `vidproc-${videoId}-`));
       const framePaths = [];
-      const duration = metadata.duration || 10; // Use extracted duration
-      const framesToGrab = 5; // Grab 5 frames for analysis
+      const duration = metadata.duration || 5; // Use extracted duration
+      // Grab 1 frame every 5 seconds
+      const framesToGrab = Math.max(1, Math.floor(duration / 5));
 
       // Calculate timestamps (avoid 0s)
       const timestamps = [];
@@ -86,19 +99,24 @@ class ProcessingService {
         }
       }
 
+      this.logger.info(`Extracted ${framePaths.length} frames: ${files.join(', ')}`);
+
       // 3. AI Analysis
       this.emitProgress(tenantId, uploaderId, videoId, 60, 'Analyzing content with AI');
       const analysisResult = await this.aiService.analyzeFrames(framePaths);
+
+      this.logger.info(`Analysis result for video ${videoId}: ${JSON.stringify(analysisResult)}`);
 
       // Cleanup Frames
       await fs.rm(tmpDir, { recursive: true, force: true }).catch(() => {});
 
       // 4. Update Database
       const isSafe = analysisResult.isSafe;
-      const status = isSafe ? 'COMPLETED' : 'FLAGGED';
+      const processingStatus = 'COMPLETED';
+      const sensitivityStatus = isSafe ? 'SAFE' : 'FLAGGED';
 
-      await this.videoRepository.updateStatus(videoId, status, tenantId);
-      await this.videoRepository.model.findByIdAndUpdate(videoId, {
+      // Perform a single atomic update for all fields using Repository
+      await this.videoRepository.updateProcessingOutcome(videoId, tenantId, {
         sensitivityAnalysis: {
           isSafe: analysisResult.isSafe,
           confidence: analysisResult.confidence,
@@ -106,12 +124,16 @@ class ProcessingService {
           summary: analysisResult.summary,
           analyzedAt: new Date()
         },
+        duration: metadata.duration,
+        size: video.size, // Calculated earlier
+        processingStatus,
+        sensitivityStatus,
         processingProgress: 100
       });
 
-      this.emitProgress(tenantId, uploaderId, videoId, 100, `Processing ${status}`);
+      this.emitProgress(tenantId, uploaderId, videoId, 100, `Processing ${sensitivityStatus}`);
 
-      this.logger.info(`Processing complete for video ${videoId} with status ${status}`);
+      this.logger.info(`Processing complete for video ${videoId} with status ${sensitivityStatus}`);
     } catch (error) {
       this.logger.error(`Processing error for video ${videoId}: ${error.message}`);
       // We assume uploaderId is known or we can try to find it?
