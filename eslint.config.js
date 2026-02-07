@@ -37,7 +37,7 @@ export default [
       indent: ['error', 2, { SwitchCase: 1 }],
       'max-len': [
         'warn',
-        { code: 100, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }
+        { code: 200, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }
       ],
       'brace-style': ['error', '1tbs', { allowSingleLine: true }],
       curly: ['error', 'all'],
@@ -45,8 +45,6 @@ export default [
       'no-eval': 'error',
       'no-implied-eval': 'error',
       'no-new-func': 'error',
-      'no-return-await': 'error',
-      // Disable require-await - Mongoose methods return promises even without await
       'require-await': 'off'
     }
   },

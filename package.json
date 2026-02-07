@@ -2,13 +2,19 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "private": true,
   "type": "module",
+  "workspaces": [
+    "services/*",
+    "shared"
+  ],
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nodemon src/server.js",
     "format:fix": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:check": "eslint .",
+    "services:identity": "npm run dev -w services/identity-service",
+    "services:media": "npm run dev -w services/media-service",
+    "services:stream": "npm run dev -w services/stream-service",
     "lint:fix": "eslint . --fix",
     "lint:format": "npm run format:fix && npm run lint:fix",
     "prepare": "husky"
