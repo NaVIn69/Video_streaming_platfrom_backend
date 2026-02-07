@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 import slugify from 'slugify';
+import { redisClient } from '@video-stream/shared';
 
 export default class TenantService {
   constructor(tenantRepository, roleService, userRepository, logger) {
@@ -108,10 +109,29 @@ export default class TenantService {
   }
 
   async deleteTenant(id) {
+    // 0. REVOKE ACCESS IMMEDIATELY via Redis Blacklist
+    try {
+      await redisClient.setex(`blacklist:tenant:${id}`, 86400 * 7, 'deleted'); // Ban for 7 days (or max token duration)
+    } catch (err) {
+      this.logger.error(`Failed to ban tenant ${id} in Redis: ${err.message}`);
+      // Proceed with deletion even if Redis fails? Ideally yes, but log it.
+    }
+
+    // 1. Delete all users belonging to this tenant
+    await this.userRepository.deleteByTenantId(id);
+
+    // 2. Delete all roles belonging to this tenant
+    // Assuming roleService has deleteRolesByTenant or we access repo directly if service doesn't expose it.
+    // Ideally use service method.
+    if (this.roleService.deleteRolesByTenant) {
+      await this.roleService.deleteRolesByTenant(id);
+    }
+
+    // 3. Delete the tenant itself
     const tenant = await this.tenantRepository.deleteById(id);
     if (!tenant) {
       throw createError(404, 'Tenant not found');
     }
-    return { message: 'Tenant deleted successfully' };
+    return { message: 'Tenant and all associated data deleted successfully' };
   }
 }

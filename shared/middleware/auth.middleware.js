@@ -10,30 +10,58 @@ export class AuthMiddleware {
 
   authenticate = async (req, res, next) => {
     try {
+      // 1. Check for Gateway Trusted Headers (Performance Optimization)
+      const gwUserId = req.headers['x-user-id'];
+      const gwTenantId = req.headers['x-tenant-id'];
+      const gwRoles = req.headers['x-user-roles'];
+
+      if (gwUserId && gwTenantId) {
+        // Trust the Gateway
+        req.user = {
+          _id: gwUserId,
+          roles: gwRoles ? JSON.parse(gwRoles) : [],
+          tenantId: gwTenantId
+        };
+        req.tenant = { _id: gwTenantId };
+        req.userId = gwUserId;
+        req.tenantId = gwTenantId;
+        return next();
+      }
+
+      // 2. Fallback to Token Verification (Legacy / Direct Access / Identity Service)
       const token = req.headers.authorization?.split(' ')[1] || req.cookies?.token;
 
       if (!token) {
         throw createError(401, 'No token provided');
       }
 
+      // Verify Token Signature (Stateful or Stateless)
       const decoded = await this.authService.verifyToken(token);
 
-      // Verify user still exists and is active
-      const user = await this.userRepository.findById(decoded.userId, decoded.tenantId);
+      if (this.userRepository && this.tenantRepository) {
+        // Stateful check (Identity Service)
+        const user = await this.userRepository.findById(decoded.userId, decoded.tenantId);
+        if (!user || !user.isActive) {
+          throw createError(401, 'User not found or inactive');
+        }
 
-      if (!user || !user.isActive) {
-        throw createError(401, 'User not found or inactive');
+        const tenant = await this.tenantRepository.findById(decoded.tenantId);
+        if (!tenant || !tenant.isActive) {
+          throw createError(401, 'Tenant not found or inactive');
+        }
+
+        req.user = user;
+        req.tenant = tenant;
+      } else {
+        // Stateless fallback
+        req.user = {
+          _id: decoded.userId,
+          roles: decoded.roles || [],
+          tenantId: decoded.tenantId
+        };
+        req.tenant = { _id: decoded.tenantId };
       }
 
-      // Verify tenant is active
-      const tenant = await this.tenantRepository.findById(decoded.tenantId);
-      if (!tenant || !tenant.isActive) {
-        throw createError(401, 'Tenant not found or inactive');
-      }
-
-      // Attach user and tenant to request
-      req.user = user;
-      req.tenant = tenant;
       req.userId = decoded.userId;
       req.tenantId = decoded.tenantId;
 

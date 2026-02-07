@@ -84,4 +84,8 @@ export default class RoleService {
     }
     return { message: 'Role deleted successfully' };
   }
+
+  async deleteRolesByTenant(tenantId) {
+    return this.roleRepository.deleteByTenantId(tenantId);
+  }
 }

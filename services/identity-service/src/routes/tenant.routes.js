@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateSuperAdmin } from '@video-stream/shared/middleware/superadmin.middleware.js';
+import { authenticateSuperAdmin } from '@video-stream/shared';
 
 export default function createTenantRoutes(dependencies) {
   const router = express.Router();

@@ -1,0 +1,25 @@
+{
+    "name": "gateway-service",
+    "version": "1.0.0",
+    "description": "API Gateway for Video Streaming Platform",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "cross-env NODE_ENV=dev nodemon src/server.js"
+    },
+    "dependencies": {
+        "@video-stream/shared": "*",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "helmet": "^7.1.0",
+        "http-proxy-middleware": "^2.0.6",
+        "jsonwebtoken": "^9.0.2",
+        "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}

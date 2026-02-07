@@ -38,4 +38,8 @@ export default class RoleRepository {
     }
     return this.roleModel.findOneAndDelete(query).exec();
   }
+
+  async deleteByTenantId(tenantId) {
+    return this.roleModel.deleteMany({ tenantId }).exec();
+  }
 }

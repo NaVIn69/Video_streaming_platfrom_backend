@@ -7,11 +7,12 @@
         "dev": "cross-env NODE_ENV=dev nodemon src/server.js"
     },
     "dependencies": {
-        "express": "^5.2.1",
-        "mongoose": "^9.1.5",
-        "jsonwebtoken": "^9.0.3",
+        "@video-stream/shared": "*",
         "bcryptjs": "^3.0.3",
         "cors": "^2.8.6",
-        "@video-stream/shared": "*"
+        "express": "^5.2.1",
+        "ioredis": "^5.9.2",
+        "jsonwebtoken": "^9.0.3",
+        "mongoose": "^9.1.5"
     }
 }

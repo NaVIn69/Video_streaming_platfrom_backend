@@ -1,7 +1,6 @@
 import http from 'http';
 import app, { setupRoutes } from './app.js';
-import logger from '@video-stream/shared/config/logger.js';
-import { Config } from '@video-stream/shared/config/index.js';
+import { logger, Config, AuthMiddleware, TenantMiddleware } from '@video-stream/shared';
 import mongoose from 'mongoose';
 
 // Models
@@ -28,10 +27,6 @@ import UserController from './controllers/user.controller.js';
 import RoleController from './controllers/role.controller.js';
 import TenantController from './controllers/tenant.controller.js';
 import SuperAdminController from './controllers/superadmin.controller.js';
-
-// Middleware
-import { AuthMiddleware } from '@video-stream/shared/middleware/auth.middleware.js';
-import { TenantMiddleware } from '@video-stream/shared/middleware/tenant.middleware.js';
 
 const StartServer = async () => {
   try {

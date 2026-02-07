@@ -4,35 +4,6 @@ class VideoController {
     this.logger = logger;
   }
 
-  upload = async (req, res, next) => {
-    try {
-      const video = await this.videoService.uploadVideo(req.file, req.body, req.user, req.tenantId);
-
-      res.status(201).json({
-        success: true,
-        message: 'Video uploaded successfully. Processing started.',
-        data: {
-          videoId: video._id,
-          status: video.processingStatus
-        }
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  list = async (req, res, next) => {
-    try {
-      const videos = await this.videoService.listVideos(req.tenantId, req.query);
-      res.json({
-        success: true,
-        data: videos
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
-
   stream = async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -42,6 +13,8 @@ class VideoController {
       // which is efficient and handles range requests automatically by S3.
       // If we wanted to proxy, we would pipe getObject stream here.
 
+      // Directly implement service logic here or keep service separate
+      // Assuming this.videoService.getVideoStream exists
       const { url } = await this.videoService.getVideoStream(id, req.tenantId, range);
 
       // Redirect to S3 Signed URL

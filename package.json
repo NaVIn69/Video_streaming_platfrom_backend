@@ -6,6 +6,10 @@
   "type": "module",
   "workspaces": [
     "services/*",
+    "services/identity-service",
+    "services/media-service",
+    "services/stream-service",
+    "services/gateway",
     "shared"
   ],
   "scripts": {
@@ -15,6 +19,7 @@
     "services:identity": "npm run dev -w services/identity-service",
     "services:media": "npm run dev -w services/media-service",
     "services:stream": "npm run dev -w services/stream-service",
+    "services:gateway": "npm run dev -w services/gateway",
     "lint:fix": "eslint . --fix",
     "lint:format": "npm run format:fix && npm run lint:fix",
     "prepare": "husky"

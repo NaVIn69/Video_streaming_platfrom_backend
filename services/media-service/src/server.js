@@ -1,15 +1,17 @@
 import http from 'http';
-import app, { setupRoutes } from './app.js';
-import logger from '@video-stream/shared/config/logger.js';
-import { Config } from '@video-stream/shared/config/index.js';
 import mongoose from 'mongoose';
-import s3Client from '@video-stream/shared/config/s3.js';
+import app, { setupRoutes } from './app.js';
+import {
+  logger,
+  Config,
+  s3Client,
+  AuthMiddleware,
+  verifyToken,
+  TenantMiddleware
+} from '@video-stream/shared';
 
 // Models (Cross-service or duplicated import for shared DB access)
 import { Video } from './models/video.model.js';
-// We need User model for AuthMiddleware if we keep it stateful
-// import { User } from '../../identity-service/src/models/user.model.js';
-// Use relative path to Identity Service for now to avoid duplication code drift
 
 // Repositories
 import VideoRepository from './repositories/video.repository.js';
@@ -22,12 +24,6 @@ import SensitivityAnalysisService from './services/sensitivityanalysis.service.j
 
 // Controllers
 import VideoController from './controllers/video.controller.js';
-
-// Middleware
-// import { AuthMiddleware } from '@video-stream/shared/middleware/auth.middleware.js';
-// For Media Service, we might need a simplified Auth flow or link to Identity DB.
-// Assuming we wire basic dependencies for now.
-import { TenantMiddleware } from '@video-stream/shared/middleware/tenant.middleware.js';
 
 const StartServer = async () => {
   try {
@@ -67,14 +63,15 @@ const StartServer = async () => {
     // Middleware
     // Mock Auth Middleware or full stack?
     // Using a placeholder that MUST be fixed in "Fix Impacts" phase
-    const authMiddleware = {
-      authenticate: (req, res, next) => {
-        // Simplified JWT verify here or allow all for dev?
-        // Ideally we import the real AuthMiddleware and give it the real UserRepo (connected to shared DB)
-        return next();
-      },
-      requirePermission: () => (req, res, next) => next()
+    // Proxy Auth Service for Stateless Verification
+    const proxyAuthService = {
+      verifyToken: async token => {
+        return verifyToken(token);
+      }
     };
+
+    // Middleware - Stateless Mode
+    const authMiddleware = new AuthMiddleware(proxyAuthService, null, null);
 
     // Tenant Repo is needed for TenantMiddleware
     const tenantRepository = { findById: async () => ({ isActive: true }) }; // Mock

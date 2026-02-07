@@ -73,4 +73,8 @@ export default class UserRepository {
   async updateLastLogin(id) {
     return this.userModel.findByIdAndUpdate(id, { lastLoginAt: new Date() }, { new: true }).exec();
   }
+
+  async deleteByTenantId(tenantId) {
+    return this.userModel.deleteMany({ tenantId }).exec();
+  }
 }

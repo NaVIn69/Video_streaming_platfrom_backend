@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 import bcrypt from 'bcryptjs';
+import { redisClient } from '@video-stream/shared';
 
 export default class UserService {
   constructor(userRepository, roleRepository, logger) {
@@ -129,11 +130,16 @@ export default class UserService {
     // Return updated user
     const updatedUser = await this.userRepository.findById(user._id, tenantId);
     const userObj = updatedUser.toObject();
-    delete userObj.passwordHash;
     return userObj;
   }
 
   async deleteUser(userId, tenantId) {
+    try {
+      await redisClient.setex(`blacklist:user:${userId}`, 86400 * 7, 'deleted');
+    } catch (err) {
+      this.logger.error(`Failed to ban user ${userId} in Redis: ${err.message}`);
+    }
+
     const user = await this.userRepository.deleteById(userId, tenantId);
     if (!user) {
       throw createError(404, 'User not found');

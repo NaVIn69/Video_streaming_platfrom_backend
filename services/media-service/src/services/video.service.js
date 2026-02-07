@@ -1,5 +1,5 @@
 import createError from 'http-errors';
-import { getSignedVideoUrl } from '@video-stream/shared/utils/s3.utils.js';
+import { getSignedVideoUrl } from '@video-stream/shared';
 
 class VideoService {
   constructor(videoRepository, userRepository, processingService, storageService, logger) {

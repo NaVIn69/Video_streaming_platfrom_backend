@@ -1,5 +1,5 @@
 import express from 'express';
-import logger from '@video-stream/shared/config/logger.js';
+import { logger } from '@video-stream/shared';
 import createVideoRoutes from './routes/video.routes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';

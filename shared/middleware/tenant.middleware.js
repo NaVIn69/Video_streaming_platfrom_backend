@@ -8,6 +8,26 @@ export class TenantMiddleware {
   // Extract tenant from subdomain or header
   extractTenant = async (req, res, next) => {
     try {
+      // 1. Gateway Trusted Header (Fast Path)
+      const gwTenantId = req.headers['x-tenant-id'];
+      if (gwTenantId) {
+        req.tenantId = gwTenantId;
+        req.tenant = { _id: gwTenantId, isActive: true }; // Minimal tenant object
+        return next();
+      }
+
+      // 2. Fallback: Slug Lookup (Requires Repository)
+      if (!this.tenantRepository) {
+        // If no repository and no header, we can't identify tenant securely in standalone mode without a DB.
+        // For dev/mock, we might fallback to default.
+        console.warn(
+          'TenantMiddleware: No repository and no x-tenant-id header. Defaulting to mock.'
+        );
+        req.tenantId = 'default-tenant-id';
+        req.tenant = { _id: 'default-tenant-id', name: 'Default', isActive: true };
+        return next();
+      }
+
       // Try to get tenant from subdomain
       const host = req.headers.host || '';
       const subdomain = host.split('.')[0];

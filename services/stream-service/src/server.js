@@ -1,7 +1,12 @@
 import http from 'http';
 import app, { setupRoutes } from './app.js';
-import logger from '@video-stream/shared/config/logger.js';
-import { Config } from '@video-stream/shared/config/index.js'; // Verify shared config path
+import {
+  logger,
+  Config,
+  AuthMiddleware,
+  TenantMiddleware,
+  verifyToken
+} from '@video-stream/shared';
 import mongoose from 'mongoose';
 
 // Models
@@ -12,8 +17,6 @@ import VideoRepository from './repositories/video.repository.js';
 
 // Services
 import VideoService from './services/video.service.js';
-// Ideally duplicate StorageService logic if simple, or import.
-// For now, I'll assume we duplicated it or import it from Media Service directly.
 
 // Controllers
 import VideoController from './controllers/video.controller.js';
@@ -27,32 +30,22 @@ const StartServer = async () => {
 
     const videoRepository = new VideoRepository(Video);
 
-    // Mock Services not needed for Streaming (Processing, AI)
-    const processingService = {};
-    const storageService = { getVideoStream: () => {} }; // Needs actual implementation logic
-
-    const videoService = new VideoService(
-      videoRepository,
-      null,
-      processingService,
-      storageService,
-      logger
-    );
+    const videoService = new VideoService(videoRepository, logger);
 
     const videoController = new VideoController(videoService, logger);
 
-    const authMiddleware = {
-      authenticate: (req, res, next) => next(), // Implement JWT verification
-      requirePermission: () => (req, res, next) => next()
-    };
+    // 3. Auth & Tenant Middleware (Stateless/Gateway Mode)
+    // Pass minimal dependencies. AuthMiddleware uses verifyToken from shared.
+    // TenantMiddleware will trust x-tenant-id header from Gateway.
 
-    const tenantMiddleware = { extractTenant: (req, res, next) => next() };
+    const proxyAuthService = { verifyToken };
+    const authMiddleware = new AuthMiddleware(proxyAuthService, null, null);
+    const tenantMiddleware = new TenantMiddleware(null); // No repository needed for stream service
 
     const dependencies = {
       videoController,
       authMiddleware,
-      tenantMiddleware,
-      storageService
+      tenantMiddleware
     };
 
     setupRoutes(dependencies);

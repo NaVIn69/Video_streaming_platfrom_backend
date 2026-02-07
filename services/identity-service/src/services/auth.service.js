@@ -98,7 +98,10 @@ export default class AuthService {
       userId: user._id.toString(),
       tenantId: tenant._id.toString(),
       email: user.email,
-      roles: user.roles.map(r => r.name || r)
+      roles: user.roles.map(r => ({
+        name: r.name,
+        permissions: r.permissions
+      }))
     };
 
     return jwt.sign(payload, Config.JWT_SECRET, {

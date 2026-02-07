@@ -1,7 +1,5 @@
 import { Server } from 'socket.io';
-import logger from '@video-stream/shared/config/logger.js';
-import { socketAuthMiddleware } from '@video-stream/shared/middleware/socket.middleware.js';
-import { Config } from '@video-stream/shared/config/index.js';
+import { logger, socketAuthMiddleware, Config } from '@video-stream/shared';
 let io;
 
 export const initializeSocket = server => {

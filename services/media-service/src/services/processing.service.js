@@ -1,5 +1,5 @@
 import ffmpeg from 'fluent-ffmpeg';
-import { getSignedVideoUrl } from '@video-stream/shared/utils/s3.utils.js';
+import { getSignedVideoUrl } from '@video-stream/shared';
 import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
@@ -39,10 +39,6 @@ class ProcessingService {
       video.processingStatus = 'PROCESSING';
       await video.save();
 
-      // Step 1: Get Access URL
-      // In a real scenario, we might download the file to disk for ffmpeg
-      // For this MVP, we will try to probe directly from the signed URL if ffmpeg supports it,
-      // or we just simulate the metadata extraction if network is an issue.
       const videoUrl = await getSignedVideoUrl(video.s3Key);
 
       // First, extract metadata to get duration
